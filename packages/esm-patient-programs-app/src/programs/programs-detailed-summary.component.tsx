@@ -155,7 +155,7 @@ const ProgramsDetailedSummary: React.FC<ProgramsDetailedSummaryProps> = ({ patie
                       {row.cells.map((cell) => (
                         <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
                       ))}
-                      <TableCell classname={`cds--table-column-menu ${styles.actionTableCell}`}>
+                      <TableCell className={`cds--table-column-menu ${styles.actionTableCell}`}>
                         <ProgramsActionsMenu patientUuid={patientUuid} programEnrollmentId={enrollments[i]?.uuid} />
                       </TableCell>
                     </TableRow>
