@@ -1,6 +1,6 @@
 import React, { type ComponentProps, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { type TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   DataTable,
@@ -19,7 +19,6 @@ import {
 import {
   AddIcon,
   type ConfigObject,
-  EditIcon,
   formatDate,
   formatDatetime,
   useConfig,
@@ -29,14 +28,10 @@ import {
 import { CardHeader, EmptyState, ErrorState, launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import { findLastState, usePrograms } from './programs.resource';
 import styles from './programs-detailed-summary.scss';
+import { ProgramsActionsMenu } from './programs-actions-menu.component';
 
 interface ProgramsDetailedSummaryProps {
   patientUuid: string;
-}
-
-interface ProgramEditButtonProps {
-  programEnrollmentId: string;
-  t: TFunction;
 }
 
 const ProgramsDetailedSummary: React.FC<ProgramsDetailedSummaryProps> = ({ patientUuid }) => {
@@ -160,8 +155,8 @@ const ProgramsDetailedSummary: React.FC<ProgramsDetailedSummaryProps> = ({ patie
                       {row.cells.map((cell) => (
                         <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
                       ))}
-                      <TableCell className="cds--table-column-menu">
-                        <ProgramEditButton programEnrollmentId={enrollments[i]?.uuid} t={t} />
+                      <TableCell classname={`cds--table-column-menu ${styles.actionTableCell}`}>
+                        <ProgramsActionsMenu patientUuid={patientUuid} programEnrollmentId={enrollments[i]?.uuid} />
                       </TableCell>
                     </TableRow>
                   ))}
