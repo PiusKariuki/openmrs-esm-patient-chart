@@ -30,6 +30,7 @@ export const ProgramsActionsMenu = ({ patientUuid, programEnrollmentId }: Progra
   return (
     <Layer className={styles.layer}>
       <OverflowMenu
+        name={t('editOrDeleteProgram', 'Edit or delete program')}
         aria-label={t('editOrDeleteProgram', 'Edit or delete program')}
         size={isTablet ? 'lg' : 'sm'}
         flipped
