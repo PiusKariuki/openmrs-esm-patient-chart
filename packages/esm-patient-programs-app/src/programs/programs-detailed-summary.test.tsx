@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { getDefaultsFromConfigSchema, openmrsFetch, useConfig } from '@openmrs/esm-framework';
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import { mockCareProgramsResponse, mockEnrolledInAllProgramsResponse, mockEnrolledProgramsResponse } from '__mocks__';
@@ -77,8 +77,10 @@ describe('ProgramsDetailedSummary', () => {
     expect(row).toBeInTheDocument();
     expect(within(row).getByRole('cell', { name: /16-Jan-2020/i })).toBeInTheDocument();
     expect(within(row).getByRole('cell', { name: /active$/i })).toBeInTheDocument();
-    const editButton = within(row).getByRole('button', { name: /Edit Program$/i });
-    expect(editButton).toBeInTheDocument();
+    const actionMenuButton = within(row).getByRole('button', { name: /options$/i });
+    expect(actionMenuButton).toBeInTheDocument();
+
+    await user.click(actionMenuButton);
 
     // Clicking "Add" launches the programs form in a workspace
     expect(addButton).toBeEnabled();
@@ -86,8 +88,8 @@ describe('ProgramsDetailedSummary', () => {
 
     expect(launchPatientWorkspace).toHaveBeenCalledWith('programs-form-workspace');
 
-    // Clicking the edit button launches the edit form in a workspace
-    await user.click(editButton);
+    await user.click(actionMenuButton);
+    await user.click(screen.getByText('Edit'));
 
     expect(launchPatientWorkspace).toHaveBeenCalledWith('programs-form-workspace', {
       programEnrollmentId: mockEnrolledProgramsResponse[0].uuid,
