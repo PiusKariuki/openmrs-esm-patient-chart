@@ -55,7 +55,7 @@ describe('ProgramActionsMenu', () => {
     fireEvent.click(screen.getByText('Delete'));
 
     expect(showModal).toHaveBeenCalledWith('program-delete-confirmation-dialog', {
-      closeDelete: expect.any(Function),
+      closeDeleteModal: expect.any(Function),
       patientUuid,
       programEnrollmentId,
     });
