@@ -176,25 +176,4 @@ const ProgramsDetailedSummary: React.FC<ProgramsDetailedSummaryProps> = ({ patie
   return <EmptyState displayText={displayText} headerTitle={headerTitle} launchForm={launchProgramsForm} />;
 };
 
-function ProgramEditButton({ programEnrollmentId, t }: ProgramEditButtonProps) {
-  const isTablet = useLayoutType() === 'tablet';
-  const launchEditProgramsForm = useCallback(
-    () => launchPatientWorkspace('programs-form-workspace', { programEnrollmentId }),
-    [programEnrollmentId],
-  );
-
-  return (
-    <Button
-      aria-label="edit program"
-      kind="ghost"
-      renderIcon={(props: ComponentProps<typeof EditIcon>) => <EditIcon size={16} {...props} />}
-      iconDescription={t('editProgram', 'Edit Program')}
-      onClick={launchEditProgramsForm}
-      hasIconOnly
-      tooltipPosition="left"
-      size={isTablet ? 'lg' : 'sm'}
-    />
-  );
-}
-
 export default ProgramsDetailedSummary;
