@@ -27,10 +27,6 @@
         "path": "Programs"
       },
       "order": 10
-    },
-    {
-      "name": "program-delete-confirmation-dialog",
-      "component": "deleteProgramConfirmationDialog"
     }
   ],
   "pages": [],
@@ -39,6 +35,12 @@
       "name": "programs-form-workspace",
       "title": "programEnrollmentWorkspaceTitle",
       "component": "programsFormWorkspace"
+    }
+  ],
+  "modals": [
+    {
+      "name": "program-delete-confirmation-dialog",
+      "component": "deleteProgramConfirmationDialog"
     }
   ]
 }
