@@ -71,7 +71,7 @@ describe('DeleteProgramModal', () => {
     expect(showSnackbar).toHaveBeenCalledWith({
       isLowContrast: true,
       kind: 'success',
-      title: 'Program Deleted',
+      title: 'Program Enrollment Deleted',
     });
   });
 
@@ -92,7 +92,7 @@ describe('DeleteProgramModal', () => {
     expect(showSnackbar).toHaveBeenCalledWith({
       isLowContrast: false,
       kind: 'error',
-      title: 'Error deleting program',
+      title: 'Error deleting program enrollment',
       subtitle: errorMessage,
     });
   });
