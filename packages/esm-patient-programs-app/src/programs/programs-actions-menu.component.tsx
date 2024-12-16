@@ -3,7 +3,6 @@ import { showModal, useLayoutType } from '@openmrs/esm-framework';
 import { Layer, OverflowMenu, OverflowMenuItem } from '@carbon/react';
 import React, { useCallback } from 'react';
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
-import styles from './program-actions-menu.scss';
 
 interface ProgramActionsProps {
   patientUuid: string;
@@ -28,26 +27,15 @@ export const ProgramsActionsMenu = ({ patientUuid, programEnrollmentId }: Progra
   };
 
   return (
-    <Layer className={styles.layer}>
+    <Layer>
       <OverflowMenu
         name={t('editOrDeleteProgram', 'Edit or delete program')}
         aria-label={t('editOrDeleteProgram', 'Edit or delete program')}
         size={isTablet ? 'lg' : 'sm'}
         flipped
-        align="left"
       >
-        <OverflowMenuItem
-          className={styles.menuItem}
-          id="editProgram"
-          onClick={launchEditProgramsForm}
-          itemText={t('edit', 'Edit')}
-        />
-        <OverflowMenuItem
-          className={styles.menuItem}
-          id="deleteProgam"
-          onClick={launchDeleteProgramDialog}
-          itemText={t('delete', 'Delete')}
-        />
+        <OverflowMenuItem id="editProgram" onClick={launchEditProgramsForm} itemText={t('edit', 'Edit')} />
+        <OverflowMenuItem id="deleteProgam" onClick={launchDeleteProgramDialog} itemText={t('delete', 'Delete')} />
       </OverflowMenu>
     </Layer>
   );
