@@ -35,8 +35,8 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    expect(screen.getByText('Delete Program')).toBeInTheDocument();
-    expect(screen.getByText('Are you sure you want to delete this program')).toBeInTheDocument();
+    expect(screen.getByText('Delete Program Enrollment')).toBeInTheDocument();
+    expect(screen.getByText('Are you sure you want to delete this program enrollment?')).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Delete')).toBeInTheDocument();
   });
