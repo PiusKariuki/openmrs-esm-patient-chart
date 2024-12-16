@@ -25,7 +25,7 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
         showSnackbar({
           isLowContrast: true,
           kind: 'success',
-          title: t('programDeleted', 'Program Deleted'),
+          title: t('programDeleted', 'Program Enrollment Deleted'),
         });
       }
     } catch (error) {
