@@ -32,7 +32,7 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
       showSnackbar({
         isLowContrast: false,
         kind: 'error',
-        title: t('errorDeletingProgram', 'Error deleting program'),
+        title: t('errorDeletingProgram', 'Error deleting program enrollment'),
         subtitle: error?.message,
       });
     } finally {
