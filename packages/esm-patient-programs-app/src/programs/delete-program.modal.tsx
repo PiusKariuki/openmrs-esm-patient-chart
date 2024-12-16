@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, InlineLoading, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { deleteProgramEnrollment, useEnrollments } from './programs.resource';
-import { showSnackbar } from '@openmrs/esm-framework';
+import { showSnackbar, getCoreTranslation } from '@openmrs/esm-framework';
 
 interface DeleteProgramProps {
   closeDeleteModal: () => void;
@@ -39,22 +39,24 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
       setIsDeleting(false);
     }
   }, [closeDeleteModal, programEnrollmentId, t, mutateEnrollments]);
-
   return (
     <div>
-      <ModalHeader closeModal={closeDeleteModal} title={t('deletePatientProgram', 'Delete Program Enrollment')} />
+      <ModalHeader
+        closeModal={closeDeleteModal}
+        title={t('deletePatientProgramEnrollment', 'Delete Program Enrollment')}
+      />
       <ModalBody>
         <p>{t('deleteModalConfirmationText', 'Are you sure you want to delete this program enrollment?')}</p>
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={closeDeleteModal}>
-          {t('cancel', 'Cancel')}
+          {getCoreTranslation('cancel', 'Cancel')}
         </Button>
         <Button kind="danger" onClick={handleDelete} disabled={isDeleting}>
           {isDeleting ? (
             <InlineLoading description={t('deleting', 'Deleting') + '...'} />
           ) : (
-            <span>{t('delete', 'Delete')}</span>
+            <span>{getCoreTranslation('confirm', 'Confirm')}</span>
           )}
         </Button>
       </ModalFooter>
