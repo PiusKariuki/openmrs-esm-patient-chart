@@ -39,8 +39,8 @@
   ],
   "modals": [
     {
-      "name": "program-delete-confirmation-dialog",
-      "component": "deleteProgramConfirmationDialog"
+      "name": "program-delete-confirmation-modal",
+      "component": "deleteProgramConfirmationModal"
     }
   ]
 }

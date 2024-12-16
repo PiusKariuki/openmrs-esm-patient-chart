@@ -19,7 +19,7 @@ export const ProgramsActionsMenu = ({ patientUuid, programEnrollmentId }: Progra
   );
 
   const launchDeleteProgramDialog = () => {
-    const dispose = showModal('program-delete-confirmation-dialog', {
+    const dispose = showModal('program-delete-confirmation-modal', {
       closeDeleteModal: () => dispose(),
       programEnrollmentId,
       patientUuid,
