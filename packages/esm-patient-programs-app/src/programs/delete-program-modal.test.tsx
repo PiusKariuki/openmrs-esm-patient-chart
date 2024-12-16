@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { deleteProgramEnrollment, useEnrollments } from './programs.resource';
 import DeleteProgramModal from './delete-program.modal';
-import { showSnackbar } from '@openmrs/esm-framework';
+import { showSnackbar, getCoreTranslation } from '@openmrs/esm-framework';
 
 jest.mock('./programs.resource', () => ({
   deleteProgramEnrollment: jest.fn(),
@@ -10,6 +10,7 @@ jest.mock('./programs.resource', () => ({
 }));
 jest.mock('@openmrs/esm-framework', () => ({
   showSnackbar: jest.fn(),
+  getCoreTranslation: jest.fn((key, defaultText) => defaultText),
 }));
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key, defaultText) => defaultText }),
@@ -38,7 +39,7 @@ describe('DeleteProgramModal', () => {
     expect(screen.getByText('Delete Program Enrollment')).toBeInTheDocument();
     expect(screen.getByText('Are you sure you want to delete this program enrollment?')).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
-    expect(screen.getByText('Delete')).toBeInTheDocument();
+    expect(screen.getByText('Confirm')).toBeInTheDocument();
   });
 
   it('Calls closeDeleteModal when cancel button is clicked', () => {
@@ -62,9 +63,9 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    fireEvent.click(screen.getByText('Delete'));
+    fireEvent.click(screen.getByText('Confirm'));
     expect(screen.getByText('Deleting...')).toBeInTheDocument();
-    await screen.findByText('Delete');
+    await screen.findByText('Confirm');
     expect(deleteProgramEnrollment).toHaveBeenCalledWith(programEnrollmentId, expect.any(AbortController));
     expect(mockMutateEnrollments).toHaveBeenCalled();
     expect(closeDeleteModalMock).toHaveBeenCalled();
@@ -86,8 +87,8 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    fireEvent.click(screen.getByText('Delete'));
-    await screen.findByText('Delete');
+    fireEvent.click(screen.getByText('Confirm'));
+    await screen.findByText('Confirm');
 
     expect(showSnackbar).toHaveBeenCalledWith({
       isLowContrast: false,
