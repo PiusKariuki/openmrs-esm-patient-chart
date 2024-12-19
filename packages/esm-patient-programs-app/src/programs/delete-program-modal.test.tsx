@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { deleteProgramEnrollment, useEnrollments } from './programs.resource';
 import DeleteProgramModal from './delete-program.modal';
 import { showSnackbar } from '@openmrs/esm-framework';
+import { mockPatient } from 'tools';
 
 jest.mock('./programs.resource', () => ({
   deleteProgramEnrollment: jest.fn(),
@@ -19,7 +20,7 @@ const mockMutateEnrollments = jest.fn();
 describe('DeleteProgramModal', () => {
   const closeDeleteModalMock = jest.fn();
   const programEnrollmentId = '123';
-  const patientUuid = 'abc';
+  const patientUuid = mockPatient.id;
 
   beforeEach(() => {
     jest.clearAllMocks();
