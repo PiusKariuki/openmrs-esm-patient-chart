@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { deleteProgramEnrollment, useEnrollments } from './programs.resource';
 import DeleteProgramModal from './delete-program.modal';
-import { showSnackbar, getCoreTranslation } from '@openmrs/esm-framework';
+import { showSnackbar } from '@openmrs/esm-framework';
 
 jest.mock('./programs.resource', () => ({
   deleteProgramEnrollment: jest.fn(),
@@ -11,9 +11,6 @@ jest.mock('./programs.resource', () => ({
 jest.mock('@openmrs/esm-framework', () => ({
   showSnackbar: jest.fn(),
   getCoreTranslation: jest.fn((key, defaultText) => defaultText),
-}));
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key, defaultText) => defaultText }),
 }));
 
 const mockMutateEnrollments = jest.fn();
