@@ -50,8 +50,9 @@ describe('DeleteProgramModal', () => {
   });
 
   it('Calls closeDeleteModal when cancel button is clicked', async () => {
+    const user = userEvent.setup();
     renderDeleteProgramModal();
-    await userEvent.click(screen.getByRole('button', { name: /cancel/i }));
+    await user.click(screen.getByRole('button', { name: /cancel/i }));
     expect(closeDeleteModalMock).toHaveBeenCalled();
   });
 
