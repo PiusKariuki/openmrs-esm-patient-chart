@@ -3,6 +3,8 @@ import { ProgramsActionsMenu } from './programs-actions-menu.component';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
+import { mockPatient } from 'tools';
+import userEvent from '@testing-library/user-event';
 
 jest.mock('@openmrs/esm-framework', () => ({
   showModal: jest.fn(),
