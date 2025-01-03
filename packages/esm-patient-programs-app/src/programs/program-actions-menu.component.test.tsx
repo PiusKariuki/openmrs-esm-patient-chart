@@ -1,4 +1,4 @@
-import { showModal } from '@openmrs/esm-framework';
+import { showModal, useLayoutType } from '@openmrs/esm-framework';
 import { ProgramsActionsMenu } from './programs-actions-menu.component';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
