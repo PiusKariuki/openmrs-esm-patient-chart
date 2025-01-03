@@ -19,17 +19,19 @@ const mockMutateEnrollments = jest.fn();
 const mockDeleteProgramEnrollment = jest.mocked(deleteProgramEnrollment);
 const mockShowSnackbar = jest.mocked(showSnackbar);
 (useEnrollments as jest.Mock).mockImplementation(() => ({ mutateEnrollments: mockMutateEnrollments }));
+const testProps = {
+  programEnrollmentId: '123',
+  patientUuid: mockPatient.id,
+};
 
-const programEnrollmentId = '123';
-const patientUuid = mockPatient.id;
 const closeDeleteModalMock = jest.fn();
 
 const renderDeleteProgramModal = () => {
   return render(
     <DeleteProgramModal
       closeDeleteModal={closeDeleteModalMock}
-      programEnrollmentId={programEnrollmentId}
-      patientUuid={patientUuid}
+      programEnrollmentId={testProps.programEnrollmentId}
+      patientUuid={testProps.patientUuid}
     />,
   );
 };
@@ -59,7 +61,10 @@ describe('DeleteProgramModal', () => {
     renderDeleteProgramModal();
     await user.click(screen.getByRole('button', { name: /confirm/i }));
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
-    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(programEnrollmentId, expect.any(AbortController));
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(
+      testProps.programEnrollmentId,
+      expect.any(AbortController),
+    );
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
     expect(mockShowSnackbar).toHaveBeenCalledWith({
@@ -69,19 +74,19 @@ describe('DeleteProgramModal', () => {
     });
   });
 
-  it('handles delete action error', async () => {
-    const errorMessage = 'failed to delete';
-    (deleteProgramEnrollment as jest.Mock).mockRejectedValue(new Error(errorMessage));
-
+  it('renders an error notification when the delete action fails', async () => {
+    const user = userEvent.setup();
+    mockDeleteProgramEnrollment.mockRejectedValue(new Error('Internal server error'));
     renderDeleteProgramModal();
-    await userEvent.click(screen.getByRole('button', { name: /confirm/i }));
-    await screen.findByText('Confirm');
-
-    expect(showSnackbar).toHaveBeenCalledWith({
+    await user.click(screen.getByRole('button', { name: /confirm/i }));
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(testProps.programEnrollmentId, new AbortController());
+    expect(mockMutateEnrollments).not.toHaveBeenCalled();
+    expect(mockShowSnackbar).toHaveBeenCalledWith({
       isLowContrast: false,
       kind: 'error',
-      title: 'Error deleting program enrollment',
-      subtitle: errorMessage,
+      title: expect.stringMatching(/error deleting program enrollment/i),
+      subtitle: 'Internal server error',
     });
   });
 });
