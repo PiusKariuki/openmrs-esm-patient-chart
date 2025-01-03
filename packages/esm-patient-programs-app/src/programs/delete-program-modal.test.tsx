@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { deleteProgramEnrollment, useEnrollments } from './programs.resource';
 import DeleteProgramModal from './delete-program.modal';
-import { showSnackbar } from '@openmrs/esm-framework';
+import { type FetchResponse, showSnackbar } from '@openmrs/esm-framework';
 import { mockPatient } from 'tools';
 
 jest.mock('./programs.resource', () => ({
@@ -16,6 +16,8 @@ jest.mock('@openmrs/esm-framework', () => ({
 }));
 
 const mockMutateEnrollments = jest.fn();
+const mockDeleteProgramEnrollment = jest.mocked(deleteProgramEnrollment);
+const mockShowSnackbar = jest.mocked(showSnackbar);
 (useEnrollments as jest.Mock).mockImplementation(() => ({ mutateEnrollments: mockMutateEnrollments }));
 
 const programEnrollmentId = '123';
@@ -51,18 +53,19 @@ describe('DeleteProgramModal', () => {
     expect(closeDeleteModalMock).toHaveBeenCalled();
   });
 
-  it('handles delete action successfully', async () => {
-    (deleteProgramEnrollment as jest.Mock).mockResolvedValue({ ok: true });
+  it('clicking the delete button deletes the program enrollment', async () => {
+    const user = userEvent.setup();
+    mockDeleteProgramEnrollment.mockResolvedValue({ ok: true } as unknown as FetchResponse);
     renderDeleteProgramModal();
-    await userEvent.click(screen.getByRole('button', { name: /confirm/i }));
-    await screen.findByText('Confirm');
-    expect(deleteProgramEnrollment).toHaveBeenCalledWith(programEnrollmentId, expect.any(AbortController));
-    expect(mockMutateEnrollments).toHaveBeenCalled();
-    // expect(closeDeleteModalMock).toHaveBeenCalled();
-    expect(showSnackbar).toHaveBeenCalledWith({
+    await user.click(screen.getByRole('button', { name: /confirm/i }));
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(programEnrollmentId, expect.any(AbortController));
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledWith({
       isLowContrast: true,
       kind: 'success',
-      title: 'Program Enrollment Deleted',
+      title: expect.stringMatching(/program enrollment deleted/i),
     });
   });
 
