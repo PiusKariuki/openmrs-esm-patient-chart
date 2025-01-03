@@ -41,7 +41,7 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
     <div>
       <ModalHeader
         closeModal={closeDeleteModal}
-        title={t('deletePatientProgramEnrollment', 'Delete Program Enrollment')}
+        title={t('deletePatientProgramEnrollment', 'Delete program enrollment')}
       />
       <ModalBody>
         <p>{t('deleteModalConfirmationText', 'Are you sure you want to delete this program enrollment?')}</p>
