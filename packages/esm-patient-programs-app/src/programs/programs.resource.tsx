@@ -83,13 +83,12 @@ export function updateProgramEnrollment(programEnrollmentUuid: string, payload, 
   });
 }
 
-export function deleteProgramEnrollment(programEnrollmentUuid: string, abortController) {
+export function deleteProgramEnrollment(programEnrollmentUuid: string) {
   return openmrsFetch(`${restBaseUrl}/programenrollment/${programEnrollmentUuid}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-    signal: abortController.signal,
   });
 }
 
