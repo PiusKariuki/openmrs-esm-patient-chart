@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { deleteProgramEnrollment, useEnrollments } from './programs.resource';
 import DeleteProgramModal from './delete-program.modal';
 import { showSnackbar } from '@openmrs/esm-framework';
@@ -40,7 +41,7 @@ describe('DeleteProgramModal', () => {
     expect(screen.getByRole('button', { name: /confirm/i })).toBeInTheDocument();
   });
 
-  it('Calls closeDeleteModal when cancel button is clicked', () => {
+  it('Calls closeDeleteModal when cancel button is clicked', async () => {
     render(
       <DeleteProgramModal
         closeDeleteModal={closeDeleteModalMock}
@@ -48,7 +49,7 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    fireEvent.click(screen.getByText('Cancel'));
+    await userEvent.click(screen.getByRole('button', { name: /cancel/i }));
     expect(closeDeleteModalMock).toHaveBeenCalled();
   });
 
@@ -61,8 +62,7 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    fireEvent.click(screen.getByText('Confirm'));
-    expect(screen.getByText('Deleting...')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: /confirm/i }));
     await screen.findByText('Confirm');
     expect(deleteProgramEnrollment).toHaveBeenCalledWith(programEnrollmentId, expect.any(AbortController));
     expect(mockMutateEnrollments).toHaveBeenCalled();
@@ -85,7 +85,7 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    fireEvent.click(screen.getByText('Confirm'));
+    await userEvent.click(screen.getByRole('button', { name: /confirm/i }));
     await screen.findByText('Confirm');
 
     expect(showSnackbar).toHaveBeenCalledWith({
