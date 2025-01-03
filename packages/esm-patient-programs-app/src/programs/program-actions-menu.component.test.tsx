@@ -13,9 +13,16 @@ jest.mock('@openmrs/esm-patient-common-lib', () => ({
   launchPatientWorkspace: jest.fn(),
 }));
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key: string, defaultText: string) => defaultText }),
-}));
+const testProps = {
+  programEnrollmentId: '123',
+  patientUuid: mockPatient.id,
+};
+
+const renderProgramActionsMenu = () => {
+  return render(
+    <ProgramsActionsMenu patientUuid={testProps.patientUuid} programEnrollmentId={testProps.programEnrollmentId} />,
+  );
+};
 
 describe('ProgramActionsMenu', () => {
   const patientUuid = 'abc';
