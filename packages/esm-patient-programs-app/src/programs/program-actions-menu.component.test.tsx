@@ -12,6 +12,9 @@ jest.mock('@openmrs/esm-framework', () => ({
   getCoreTranslation: jest.fn((key, defaultText) => defaultText),
 }));
 
+const mockShowModal = jest.mocked(showModal);
+const mockUseLayoutType = jest.mocked(useLayoutType);
+
 jest.mock('@openmrs/esm-patient-common-lib', () => ({
   launchPatientWorkspace: jest.fn(),
 }));
@@ -28,8 +31,9 @@ const renderProgramActionsMenu = () => {
 };
 
 describe('ProgramActionsMenu', () => {
-  const patientUuid = 'abc';
-  const programEnrollmentId = '123';
+  beforeEach(() => {
+    mockUseLayoutType.mockReturnValue('small-desktop'); // or 'large-desktop' or 'tablet'
+  });
 
   it('renders OverflowMenu with edit and delete actions', async () => {
     const user = userEvent.setup();
@@ -53,23 +57,22 @@ describe('ProgramActionsMenu', () => {
     await user.click(screen.getByRole('button'));
     await user.click(screen.getByText('Edit'));
 
-    expect(launchPatientWorkspace).toHaveBeenCalledWith('programs-form-workspace', { programEnrollmentId });
+    expect(launchPatientWorkspace).toHaveBeenCalledWith('programs-form-workspace', {
+      programEnrollmentId: testProps.programEnrollmentId,
+    });
   });
 
   it('launches delete program dialog when delete option is clicked', async () => {
-    const disposeMock = jest.fn();
-    (showModal as jest.Mock).mockReturnValue(disposeMock);
-
     const user = userEvent.setup();
     renderProgramActionsMenu();
 
     await user.click(screen.getByRole('button'));
     await user.click(screen.getByText('Delete'));
 
-    expect(showModal).toHaveBeenCalledWith('program-delete-confirmation-modal', {
+    expect(mockShowModal).toHaveBeenCalledWith('program-delete-confirmation-modal', {
       closeDeleteModal: expect.any(Function),
-      patientUuid,
-      programEnrollmentId,
+      patientUuid: testProps.patientUuid,
+      programEnrollmentId: testProps.programEnrollmentId,
     });
   });
 });
