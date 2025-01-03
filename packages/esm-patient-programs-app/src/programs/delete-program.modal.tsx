@@ -19,7 +19,7 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
     try {
       setIsDeleting(true);
       await deleteProgramEnrollment(programEnrollmentId);
-      mutateEnrollments();
+      await mutateEnrollments();
       closeDeleteModal();
       showSnackbar({
         isLowContrast: true,
