@@ -7,6 +7,7 @@ import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 jest.mock('@openmrs/esm-framework', () => ({
   showModal: jest.fn(),
   useLayoutType: jest.fn(() => 'desktop'),
+  getCoreTranslation: jest.fn((key, defaultText) => defaultText),
 }));
 
 jest.mock('@openmrs/esm-patient-common-lib', () => ({
