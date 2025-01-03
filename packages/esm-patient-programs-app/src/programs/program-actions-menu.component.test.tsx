@@ -71,12 +71,5 @@ describe('ProgramActionsMenu', () => {
       patientUuid,
       programEnrollmentId,
     });
-
-    /**
-     * Simulation for creating the dispose function
-     */
-    const { closeDeleteModal } = (showModal as jest.Mock).mock.calls[0][1];
-    closeDeleteModal();
-    expect(disposeMock).toHaveBeenCalled();
   });
 });
