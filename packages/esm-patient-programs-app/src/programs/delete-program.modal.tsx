@@ -16,8 +16,8 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
   const { mutateEnrollments } = useEnrollments(patientUuid);
 
   const handleDelete = useCallback(async () => {
+    setIsDeleting(true);
     try {
-      setIsDeleting(true);
       await deleteProgramEnrollment(programEnrollmentId);
       await mutateEnrollments();
       closeDeleteModal();
