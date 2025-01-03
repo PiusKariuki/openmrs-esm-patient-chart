@@ -18,16 +18,14 @@ const DeleteProgramModal: React.FC<DeleteProgramProps> = ({ closeDeleteModal, pr
   const handleDelete = useCallback(async () => {
     try {
       setIsDeleting(true);
-      const response = await deleteProgramEnrollment(programEnrollmentId, new AbortController());
-      if (response.ok) {
-        mutateEnrollments();
-        closeDeleteModal();
-        showSnackbar({
-          isLowContrast: true,
-          kind: 'success',
-          title: t('programDeleted', 'Program Enrollment Deleted'),
-        });
-      }
+      await deleteProgramEnrollment(programEnrollmentId);
+      mutateEnrollments();
+      closeDeleteModal();
+      showSnackbar({
+        isLowContrast: true,
+        kind: 'success',
+        title: t('programDeleted', 'Program Enrollment Deleted'),
+      });
     } catch (error) {
       showSnackbar({
         isLowContrast: false,

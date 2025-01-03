@@ -61,10 +61,7 @@ describe('DeleteProgramModal', () => {
     renderDeleteProgramModal();
     await user.click(screen.getByRole('button', { name: /confirm/i }));
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
-    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(
-      testProps.programEnrollmentId,
-      expect.any(AbortController),
-    );
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(testProps.programEnrollmentId);
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
     expect(mockShowSnackbar).toHaveBeenCalledWith({
@@ -80,7 +77,7 @@ describe('DeleteProgramModal', () => {
     renderDeleteProgramModal();
     await user.click(screen.getByRole('button', { name: /confirm/i }));
     expect(mockDeleteProgramEnrollment).toHaveBeenCalledTimes(1);
-    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(testProps.programEnrollmentId, new AbortController());
+    expect(mockDeleteProgramEnrollment).toHaveBeenCalledWith(testProps.programEnrollmentId);
     expect(mockMutateEnrollments).not.toHaveBeenCalled();
     expect(mockShowSnackbar).toHaveBeenCalledWith({
       isLowContrast: false,
