@@ -34,10 +34,10 @@ describe('DeleteProgramModal', () => {
         patientUuid={patientUuid}
       />,
     );
-    expect(screen.getByText('Delete Program Enrollment')).toBeInTheDocument();
-    expect(screen.getByText('Are you sure you want to delete this program enrollment?')).toBeInTheDocument();
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
-    expect(screen.getByText('Confirm')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /delete program enrollment/i })).toBeInTheDocument();
+    expect(screen.getByText(/are you sure you want to delete this program enrollment?/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /confirm/i })).toBeInTheDocument();
   });
 
   it('Calls closeDeleteModal when cancel button is clicked', () => {
