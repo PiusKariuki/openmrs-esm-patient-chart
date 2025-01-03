@@ -1,6 +1,6 @@
 import { showModal } from '@openmrs/esm-framework';
 import { ProgramsActionsMenu } from './programs-actions-menu.component';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 
@@ -29,10 +29,11 @@ describe('ProgramActionsMenu', () => {
   const programEnrollmentId = '123';
 
   it('renders OverflowMenu with edit and delete actions', async () => {
-    render(<ProgramsActionsMenu patientUuid={patientUuid} programEnrollmentId={programEnrollmentId} />);
+    const user = userEvent.setup();
+    renderProgramActionsMenu();
 
     const overFlowButton = screen.getByRole('button');
-    fireEvent.click(overFlowButton);
+    await user.click(overFlowButton);
 
     await waitFor(() => {
       expect(screen.getByText('Edit')).toBeInTheDocument();
@@ -43,11 +44,11 @@ describe('ProgramActionsMenu', () => {
     });
   });
 
-  it('launches edit program form when edit button is clicked', () => {
-    render(<ProgramsActionsMenu patientUuid={patientUuid} programEnrollmentId={programEnrollmentId} />);
-
-    fireEvent.click(screen.getByRole('button'));
-    fireEvent.click(screen.getByText('Edit'));
+  it('launches edit program form when edit button is clicked', async () => {
+    const user = userEvent.setup();
+    renderProgramActionsMenu();
+    await user.click(screen.getByRole('button'));
+    await user.click(screen.getByText('Edit'));
 
     expect(launchPatientWorkspace).toHaveBeenCalledWith('programs-form-workspace', { programEnrollmentId });
   });
@@ -56,10 +57,11 @@ describe('ProgramActionsMenu', () => {
     const disposeMock = jest.fn();
     (showModal as jest.Mock).mockReturnValue(disposeMock);
 
-    render(<ProgramsActionsMenu patientUuid={patientUuid} programEnrollmentId={programEnrollmentId} />);
+    const user = userEvent.setup();
+    renderProgramActionsMenu();
 
-    fireEvent.click(screen.getByRole('button'));
-    fireEvent.click(screen.getByText('Delete'));
+    await user.click(screen.getByRole('button'));
+    await user.click(screen.getByText('Delete'));
 
     expect(showModal).toHaveBeenCalledWith('program-delete-confirmation-modal', {
       closeDeleteModal: expect.any(Function),
